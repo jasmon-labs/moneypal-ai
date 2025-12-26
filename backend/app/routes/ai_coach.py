@@ -13,7 +13,6 @@ api_key = os.getenv("GEMINI_API_KEY")
 
 if api_key:
     genai.configure(api_key=api_key)
-    # Using gemini-2.0-flash as confirmed by your check_models.py
     model = genai.GenerativeModel('models/gemini-2.0-flash')
 else:
     print("❌ ERROR: GEMINI_API_KEY not found in .env")
@@ -31,7 +30,6 @@ async def chat_with_coach(request: ChatRequest, current_user: User = Depends(get
             "Always conclude with: 'Would you like me to track this goal on your dashboard?'"
         )
         
-        # Increase temperature slightly to reduce repetition
         config = genai.types.GenerationConfig(temperature=0.8)
         
         response = model.generate_content(
@@ -45,9 +43,7 @@ async def chat_with_coach(request: ChatRequest, current_user: User = Depends(get
 
     except Exception as e:
         print(f"AI ERROR: {str(e)}")
-        # Dynamic fallback to prevent looping
         if "429" in str(e):
              return {"reply": "I'm crunching numbers a bit too fast! Let's pause for 10 seconds. 🚀"}
         
-        # Non-deterministic error message
         return {"reply": "I hit a snag analyzing that. Try asking me in a different way, or mention a specific budget item!"}
