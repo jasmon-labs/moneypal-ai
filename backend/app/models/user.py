@@ -3,7 +3,7 @@ from pydantic import EmailStr
 from typing import Optional
 
 class User(Document):
-    email: EmailStr  # This is the field the error was complaining about
+    email: EmailStr
     hashed_password: str
     full_name: Optional[str] = None
     is_active: bool = True
