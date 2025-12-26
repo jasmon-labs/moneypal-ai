@@ -17,7 +17,6 @@ class Token(BaseModel):
 
 @router.post("/login", response_model=Token)
 async def login(login_data: LoginRequest):
-    # FIXED: Using a dictionary for the lookup to avoid AttributeError
     user = await User.find_one({"email": login_data.username})
     
     if not user or not verify_password(login_data.password, user.hashed_password):
