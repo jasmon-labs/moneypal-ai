@@ -5,11 +5,11 @@ class Settings(BaseSettings):
     SECRET_KEY: str
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
-    GEMINI_API_KEY: str  # <--- Added this line
+    GEMINI_API_KEY: str
 
     model_config = SettingsConfigDict(
         env_file=".env",
-        extra="ignore"  # <--- This prevents crashing on extra fields
+        extra="ignore"
     )
 
 settings = Settings()
