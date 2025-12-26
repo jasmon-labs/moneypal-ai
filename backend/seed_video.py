@@ -16,7 +16,6 @@ async def seed_video_data():
         print("❌ User not found. Run seed_user.py first!")
         return
 
-    # Clear old transactions for a clean video start
     await Transaction.find({"user_id": user.id}).delete()
 
     video_data = [
