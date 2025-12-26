@@ -6,7 +6,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# We use 'bcrypt' scheme specifically
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 async def create_test_user():
@@ -17,7 +16,6 @@ async def create_test_user():
     test_email = "chiragmishra120@gmail.com"
     test_password = "password123"
     
-    # FIX: Hash the password string
     hashed_password = pwd_context.hash(test_password)
     
     user_data = {
@@ -28,7 +26,6 @@ async def create_test_user():
     }
     
     try:
-        # Clear any existing bad data for this user first
         await db.users.delete_many({"email": test_email})
         
         await db.users.insert_one(user_data)
