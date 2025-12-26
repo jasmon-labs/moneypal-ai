@@ -6,10 +6,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 from beanie import init_beanie
 
-# Import models and ALL routes
 from app.models.user import User
-from app.models.transaction import Transaction # Ensure this is imported for init
-from app.routes import ai_coach, auth, transactions # ADDED transactions here
+from app.models.transaction import Transaction 
+from app.routes import ai_coach, auth, transactions
 
 load_dotenv()
 
@@ -44,10 +43,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# REGISTER THE ROUTERS
 app.include_router(auth.router, prefix="/api/auth", tags=["Authentication"])
 app.include_router(ai_coach.router, prefix="/api", tags=["AI Coach"])
-# THIS LINE FIXES THE 404 ERROR
 app.include_router(transactions.router, prefix="/api", tags=["Transactions"])
 
 @app.get("/")
